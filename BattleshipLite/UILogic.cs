@@ -71,13 +71,10 @@ namespace BattleshipLite
 
             Console.WriteLine($"Player information for {playerTitle}");
 
-            // Ask user for their name
             output.UsersName = UIDisplay.AskForUsersName();
 
-            // Load up the shot grid
             GameLogic.InitializeGrid(output);
 
-            // Ask user for their 5 ship placements
             PlaceShips(output);
 
             // Clear
