@@ -98,7 +98,7 @@ namespace BattleshipLiteLibrary
             {
                 model.ShipLocations.Add(new GridSpotModel
                 {
-                    SpotLetter = row,
+                    SpotLetter = row.ToUpper(),
                     SpotNumber = column,
                     Status = GridSpotStatus.Ship
                 });
