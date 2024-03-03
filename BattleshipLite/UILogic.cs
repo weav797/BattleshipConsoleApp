@@ -24,21 +24,24 @@ namespace BattleshipLite
 
                 if (gridSpot.Status == GridSpotStatus.Empty)
                 {
-                    Console.Write($"{gridSpot.SpotLetter}{gridSpot.SpotNumber}");
+                    Console.Write($" {gridSpot.SpotLetter}{gridSpot.SpotNumber} ");
                 }
                 else if (gridSpot.Status == GridSpotStatus.Hit)
                 {
-                    Console.Write(" X ");
+                    Console.Write(" X  ");
                 }
                 else if (gridSpot.Status == GridSpotStatus.Miss)
                 {
-                    Console.Write(" O ");
+                    Console.Write(" O  ");
                 }
                 else
                 {
-                    Console.Write(" ? ");
+                    Console.Write(" ?  ");
                 }
             }
+
+            Console.WriteLine();
+            Console.WriteLine();
         }
 
         public static void RecordPlayerShot(PlayerInfoModel activePlayer, PlayerInfoModel opponent)
@@ -49,9 +52,16 @@ namespace BattleshipLite
 
             do
             {
-                string shot = UIDisplay.AskForShot();
-                (row, column) = GameLogic.SplitShotIntoRowAndColumn(shot);
-                isValidShot = GameLogic.ValidateShot(activePlayer, row, column);
+                string shot = UIDisplay.AskForShot(activePlayer);
+                try
+                {
+                    (row, column) = GameLogic.SplitShotIntoRowAndColumn(shot);
+                    isValidShot = GameLogic.ValidateShot(activePlayer, row, column);
+                }
+                catch (Exception ex)
+                {
+                    isValidShot = false;
+                }
 
                 if (isValidShot == false)
                 {
@@ -63,6 +73,20 @@ namespace BattleshipLite
             bool isAHit = GameLogic.IdentifyShotResult(opponent, row, column);
 
             GameLogic.MarkShotResults(activePlayer, row, column, isAHit);
+
+            DisplayShotResults(row, column, isAHit);
+        }
+
+        private static void DisplayShotResults(string row, int column, bool isAHit)
+        {
+            if (isAHit)
+            {
+                Console.WriteLine($"{ row }{ column } is a Hit!");
+            }
+            else
+            {
+                Console.WriteLine($"{ row }{ column } is a miss.");
+            }
         }
 
         public static PlayerInfoModel CreatePlayer(string playerTitle)
@@ -77,7 +101,6 @@ namespace BattleshipLite
 
             PlaceShips(output);
 
-            // Clear
             Console.Clear();
 
             return output;
@@ -90,7 +113,21 @@ namespace BattleshipLite
                 Console.Write($"Where do you want to place ship number {model.ShipLocations.Count + 1}: ");
                 string location = Console.ReadLine();
 
-                bool isValidLocation = GameLogic.PlaceShip(model, location);
+                if (String.IsNullOrEmpty(location) == true)
+                {
+                    throw new NullReferenceException();
+                }
+
+                bool isValidLocation = false;
+
+                try
+                {
+                    isValidLocation = GameLogic.PlaceShip(model, location);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
 
                 if (isValidLocation == false)
                 {
