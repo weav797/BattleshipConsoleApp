@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace BattleshipLite
 {
@@ -23,10 +24,10 @@ namespace BattleshipLite
             Console.WriteLine($"{winner.UsersName} took {GameLogic.GetShotCount(winner)} shots.");
         }
 
-        public static string AskForShot()
+        public static string AskForShot(PlayerInfoModel player)
         {
             Console.WriteLine();
-            Console.Write("Please enter your shot selection: ");
+            Console.Write($"{player.UsersName}, please enter your shot selection: ");
             string output = Console.ReadLine();
 
             return output;
