@@ -40,5 +40,26 @@ namespace BattleshipLite
 
             return output;
         }
+
+        public static string AskForGridSize()
+        {
+            string output;
+            bool validInput = false;
+            
+            Console.WriteLine();
+            Console.WriteLine("We have added a new feature for you to decide if you want to\n" +
+                "use the normal 5x5 grid or our new 7x7 grid.");
+            Console.WriteLine();
+            do
+            {
+                Console.Write("Please select what grid size you want: ");
+                output = Console.ReadLine();
+                validInput = UILogic.ValidateGridSize(output);
+
+            } while (validInput == false);
+
+            return output;
+        }
+
     }
 }

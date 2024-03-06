@@ -58,7 +58,7 @@ namespace BattleshipLite
                     (row, column) = GameLogic.SplitShotIntoRowAndColumn(shot);
                     isValidShot = GameLogic.ValidateShot(activePlayer, row, column);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     isValidShot = false;
                 }
@@ -89,7 +89,7 @@ namespace BattleshipLite
             }
         }
 
-        public static PlayerInfoModel CreatePlayer(string playerTitle)
+        public static PlayerInfoModel CreatePlayer(string playerTitle, string gridSize)
         {
             PlayerInfoModel output = new PlayerInfoModel();
 
@@ -97,7 +97,7 @@ namespace BattleshipLite
 
             output.UsersName = UIDisplay.AskForUsersName();
 
-            GameLogic.InitializeGrid(output);
+            GameLogic.InitializeGrid(output, gridSize);
 
             PlaceShips(output);
 
@@ -134,6 +134,23 @@ namespace BattleshipLite
                     Console.WriteLine("That was not a valid location. Please try again.");
                 }
             } while (model.ShipLocations.Count < 5);
+        }
+
+        public static bool ValidateGridSize(string output)
+        {
+            bool validInput = false;
+            
+            if (output == "5" || output == "7")
+            {
+                validInput = true;
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.WriteLine("That was not a valid input. Please type either 5 or 7.");
+            }
+
+            return validInput;
         }
     }
 }

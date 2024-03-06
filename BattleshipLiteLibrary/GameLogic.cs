@@ -40,25 +40,59 @@ namespace BattleshipLiteLibrary
             return isAHit;
         }
 
-        public static void InitializeGrid(PlayerInfoModel model)
+        public static void InitializeGrid(PlayerInfoModel model, string gridSize)
         {
-            List<string> letters = new List<string>()
-            {
-                "A",
-                "B",
-                "C",
-                "D",
-                "E"
-            };
+            List<string> letters = new List<string>();
+            List<int> numbers = new List<int>();
 
-            List<int> numbers = new List<int>()
+            if (gridSize == "5")
             {
-                1,
-                2,
-                3,
-                4,
-                5
-            };
+                letters = new List<string>()
+                {
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E"
+                };
+
+                numbers = new List<int>()
+                {
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                }; 
+            }
+            else if (gridSize == "7")
+            {
+                letters = new List<string>()
+                {
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G"
+                };
+
+                numbers = new List<int>()
+                {
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7
+                };
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
 
             foreach (string letter in letters)
             {
@@ -167,7 +201,7 @@ namespace BattleshipLiteLibrary
             
             char[] shotArray = shot.ToArray();
 
-            row = shotArray[0].ToString();
+            row = shotArray[0].ToString().ToUpper();
             column = int.Parse(shotArray[1].ToString());
 
             return (row, column);
@@ -203,5 +237,6 @@ namespace BattleshipLiteLibrary
             model.ShotGrid.Add(spot);
 
         }
+
     }
 }
