@@ -14,9 +14,10 @@ namespace BattleshipLite
         static void Main(string[] args)
         {
             UIDisplay.WelcomeMessage();
+            string userInputForGridSize = UIDisplay.AskForGridSize();
 
-            PlayerInfoModel activePlayer = UILogic.CreatePlayer("Player 1");
-            PlayerInfoModel opponent = UILogic.CreatePlayer("Player 2");
+            PlayerInfoModel activePlayer = UILogic.CreatePlayer("Player 1", userInputForGridSize);
+            PlayerInfoModel opponent = UILogic.CreatePlayer("Player 2", userInputForGridSize);
             PlayerInfoModel winner = null;
 
             do
